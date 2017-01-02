@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+
+<%=form_for Instance.new(), url: project_instance_path   do |f| %>
+ <%=f.label :description%>
+ <%=f.text_field :description%>
+ <%=label_tag "00:00:00"%>
+ <%= link_to 'New Project', new_project_path %>
+ <%=hidden_field_tag "timer", "00:00:00"%>
+ <a href="">Iniciar</a>
+ <%=f.submit "Finalizar"%>
+
+
+<%end%>
+ 
+
+<br>
+
+<table>
+  <thead>
+    <tr>
+    <th colspan="3">Projecto</th>
+    <th colspan="3">Turnos</th>
+      <th colspan="3">Tiempos</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instances.each do |instance| %>
+      <tr>
+      <td colspan="3"><%=instance.project.name%></td>
+       <td colspan="3"><%=instance.instance_times.count%></td>
+       <td colspan="3"><%=instance.instance_times.sum("time_mark")%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

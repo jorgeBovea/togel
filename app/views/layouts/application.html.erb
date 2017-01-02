@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Toggl</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%=javascript_include_tag "timer.jquery.js"%>
+    <%=javascript_include_tag "timer.jquery.min.js"%>
+
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>
