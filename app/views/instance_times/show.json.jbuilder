@@ -1,1 +1,0 @@
-json.partial! "instance_times/instance_time", instance_time: @instance_time
