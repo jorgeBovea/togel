@@ -16,15 +16,28 @@ class InstancesController < ApplicationController
 
   project = Project.find(instance_params[:project_id])
   if Instance.find_by(project_id: project.id).nil?
-   instance=Instance.create(description: instance_params[:description],project_id:project.id, user_id: 1);
+     instance = Instance.create(description: instance_params[:description],project_id:project.id, user_id: current_user.id);
   else
-   instance = Instance.find_by(project_id: project.id)
+    
+    if instance_params[:description] != ""  
+      if  Instance.find_by(description: instance_params[:description], project_id: project.id).nil?
+        instance = Instance.create(description: instance_params[:description],project_id:project.id, user_id: current_user.id);
+      else
+       instance = Instance.find_by(project_id: project.id, description: instance_params[:description] )
+      end
+    else 
+     instance = Instance.find_by(project_id: project.id, description: instance_params[:description] )
+    end
   end
+
   time = params[:timer].split()
-  time_unit = time[1]
+
+  time_unit = time[1].nil? ? "sec" : time[1]
   date_str = ""
+
   if time_unit == "sec"
-    date_str = "0:0:"+time[0]
+
+    date_str = "0:0:"+(time[0].nil? ? "0" : time[0].nil?)
     sec = time[0].to_i
   else
    if time_unit == "min"

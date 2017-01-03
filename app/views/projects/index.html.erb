@@ -3,6 +3,8 @@
 
 <h1>Projects</h1>
 
+<%=link_to "log out", sign_out_path, method: :delete%>
+
 
 <div class ="row">
 <%=form_for Instance.new(), url: project_instance_path   do |f| %>
@@ -12,6 +14,46 @@
   <a class="start-timer-btn" >Inicio</a>
  <a class="pause-timer-btn" >Pausa</a>
  <%=f.select :project_id,  options_from_collection_for_select(@projects, 'id', 'name')%>
+
+<%=f.submit "Finalizar"%>
+<%end%>
+
+</div>
+
+ 
+<br>
+
+<table>
+  <thead>
+    <tr>
+    <th colspan="3">Projecto</th>
+    <th colspan="3">Turnos</th>
+    <th colspan="3">Descripcion</th>
+    <th colspan="3">Tiempos</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @instances.each do |instance| %>
+      <tr>
+      <td colspan="3"><%=instance.project.name%></td>
+       <td colspan="3"><%=instance.instance_times.count%></td>
+        <td colspan="3"><%=instance.description%></td>
+       <td colspan="3"><%=instance.sum_time%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<div class="modal fade" id="loginModal">
+   <%=form_for Project.new do |f|%>
+     <%=f.label :name, "Nombre"%>
+     <%=f.text_field :name,placeholder: "nombre"%>
+     <%= f.submit%>
+   <%end%>
+</div>
+
+
 <script>
       (function(){
       var hasTimer = false;
@@ -66,42 +108,3 @@
       });
     })();
   </script>
-<%=f.submit "Finalizar"%>
-<%end%>
-
-</div>
-
-<%= link_to "Open modal", "#loginModal", :class => "btn", "data-toggle" => "modal" %>
-
- 
-<br>
-
-<table>
-  <thead>
-    <tr>
-    <th colspan="3">Projecto</th>
-    <th colspan="3">Turnos</th>
-      <th colspan="3">Tiempos</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @instances.each do |instance| %>
-      <tr>
-      <td colspan="3"><%=instance.project.name%></td>
-       <td colspan="3"><%=instance.instance_times.count%></td>
-       <td colspan="3"><%=instance.sum_time%></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<div class="modal fade" id="loginModal">
-   <%=form_for Project.new do |f|%>
-     <%=f.label :name, "Nombre"%>
-     <%=f.text_field :name,placeholder: "nombre"%>
-     <%= f.submit%>
-   <%end%>
-</div>
-
-

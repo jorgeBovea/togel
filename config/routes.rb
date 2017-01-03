@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  root 'users#index'	
+  get 'auth/:provider/callback', to: 'sessions#create'
+  delete 'sign_out', to: 'sessions#destroy', as:'sign_out'
+
   resources :instance_times
   resources :instances
   resources :users
